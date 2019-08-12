@@ -24,7 +24,7 @@ func (p *Person) UnmarshalBinary(data []byte) error {
 }
 
 func main() {
-	c, err := two_level_cache.NewTwoLevelCache(5, 5, &Point{})
+	c, err := two_level_cache.NewTwoLevelCache(5, 5, &Person{})
 	if err != nil {
 		panic(err)
 	}
@@ -34,6 +34,7 @@ func main() {
 		panic(err)
 	}
 	p, _ := c.Get("Boris")
+	fmt.Println(p)
 	err = c.Clear()
 	if err != nil {
 		panic(err)

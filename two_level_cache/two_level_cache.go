@@ -38,7 +38,7 @@ func (c *TwoLevelCache) Cache(key string, value Marshaler) error {
 	return nil
 }
 
-func (c *TwoLevelCache) Recache() error {
+func (c *TwoLevelCache) recache() error {
 	var meanFrequency int
 	for _, k := range append(c.ramCache.GetFrequencies(), c.memoryCache.GetFrequencies()...) {
 		meanFrequency += k
@@ -79,7 +79,7 @@ func (c *TwoLevelCache) Get(key string) (Marshaler, bool) {
 	c.numberOfRequests++
 	if c.numberOfRequests >= c.numberOfRequestsForRecache {
 		c.numberOfRequests = 0
-		err := c.Recache()
+		err := c.recache()
 		if err != nil {
 			return nil, false
 		}
